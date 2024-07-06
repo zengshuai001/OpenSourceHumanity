@@ -1,0 +1,45 @@
+# Python code to simulate the impact of climate change on Arctic ice caps
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+def simulate_ice_melt(emit_rate, years):
+    """
+    Simulate the melting of Arctic ice caps over a given number of years.
+
+    :param emit_rate: Greenhouse gas emission rate (scalar)
+    :param years: Number of years to simulate (scalar)
+    :return: List of ice volumes over the years
+    """
+    # Initial ice volume (arbitrary units)
+    ice_volume = 1000
+
+    # Melting rate per year (arbitrary units)
+    melt_rate = emit_rate / 100
+
+    # Simulate ice melt over the given number of years
+    ice_volumes = [ice_volume]
+    for year in range(1, years + 1):
+        ice_volume -= melt_rate * year  # Melting increases over time
+        if ice_volume < 0:
+            ice_volume = 0  # Ice cannot go below 0
+        ice_volumes.append(ice_volume)
+
+    return ice_volumes
+
+# Example usage
+years = 100
+emission_rates = [1, 2, 3]  # Different emission rates
+
+# Simulate and plot for each emission rate
+plt.figure(figsize=(10, 6))
+for emit_rate in emission_rates:
+    ice_volumes = simulate_ice_melt(emit_rate, years)
+    plt.plot(range(years + 1), ice_volumes, label=f'Emission Rate {emit_rate}')
+
+plt.title('Simulated Impact of Greenhouse Gas Emissions on Arctic Ice Caps')
+plt.xlabel('Years')
+plt.ylabel('Ice Volume (arbitrary units)')
+plt.legend()
+plt.grid(True)
+plt.show()
