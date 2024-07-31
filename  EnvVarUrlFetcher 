@@ -1,0 +1,93 @@
+这里是一段稍微复杂一些的Python代码，它使用`os`模块来获取环境变量，并使用`requests`模块来从环境变量中指定的URL获取数据。这个例子中，我们将创建一个简单的网络请求工具，它会从一个环境变量中读取URL，然后获取该URL的内容。
+
+在运行这段代码之前，您需要在环境中设置一个名为`MY_URL`的环境变量，该变量包含您想要请求的URL。
+
+ python
+import os
+import requests
+
+def get_data_from_url(url):
+    """
+    发送HTTP GET请求到指定的URL并返回响应内容。
+
+    参数:
+    url (str): 要请求的URL。
+
+    返回:
+    str: 请求的响应内容。
+    """
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.text
+    except requests.RequestException as e:
+        return f"An error occurred: {e}"
+
+def main():
+    # 从环境变量获取URL
+    url = os.getenv('MY_URL')
+    
+    if not url:
+        print("环境变量 MY_URL 未设置或为空。")
+        return
+    
+    # 获取URL内容
+    data = get_data_from_url(url)
+    
+    # 打印结果
+    print(f"从 {url} 获取的数据:\n{data}")
+
+if __name__ == "__main__":
+    main()
+ 
+
+在GitHub上发布时，请确保添加以下内容：
+
+- 代码的描述和用途
+- 安装依赖的说明（在这个例子中是`requests`模块）
+- 如何设置环境变量的说明
+- 如何运行代码的说明
+
+以下是如何安装依赖和使用该脚本的示例说明：
+
+ markdown
+# 网络请求工具
+
+这是一个简单的Python脚本，用于从一个环境变量指定的URL获取数据。
+
+## 依赖
+
+- Python 3.x
+- requests
+
+安装依赖：
+
+ bash
+pip install requests
+ 
+
+## 环境变量
+
+设置环境变量 `MY_URL` 到您想要请求的URL。
+
+在Linux或macOS上：
+
+ bash
+export MY_URL="http://example.com"
+ 
+
+在Windows上：
+
+ cmd
+set MY_URL="http://example.com"
+ 
+
+## 运行脚本
+
+运行脚本：
+
+ bash
+python script.py
+ 
+
+这将打印从 `MY_URL` 环境变量指定的URL获取的数据
